@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_08_151214) do
+ActiveRecord::Schema.define(version: 2018_08_09_185543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "case_attributes", force: :cascade do |t|
+    t.bigint "case_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_case_attributes_on_case_id"
+  end
+
+  create_table "cases", force: :cascade do |t|
+    t.string "status", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_cases_on_status"
+    t.index ["user_id"], name: "index_cases_on_user_id"
+  end
+
+  create_table "law_categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "lawable_type"
+    t.bigint "lawable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lawable_type", "lawable_id"], name: "index_law_categories_on_lawable_type_and_lawable_id"
+    t.index ["name"], name: "index_law_categories_on_name"
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"
